@@ -37,17 +37,17 @@
 
 /* ── Dark mode ────────────────────────────────────────── */
 [data-theme="dark"] {
-  --bg: #1a1714;
-  --bg-elevated: #21201d;
-  --panel: #21201d;
-  --panel-2: #2a2824;
-  --fg: #f0ece4;
-  --fg-dim: #c4bfb4;
-  --muted: #7a756c;
-  --border: #33302a;
-  --accent: #f0ece4;
-  --accent-dim: #a09888;
-  --accent-subtle: rgba(240, 236, 228, 0.05);
+  --bg: #121110;
+  --bg-elevated: #1a1917;
+  --panel: #1a1917;
+  --panel-2: #222120;
+  --fg: #ede9e0;
+  --fg-dim: #b5b0a6;
+  --muted: #706b62;
+  --border: #2e2b26;
+  --accent: #ede9e0;
+  --accent-dim: #8a857c;
+  --accent-subtle: rgba(237, 233, 224, 0.06);
   --warm: #e8a45a;
   --green: #4ade80;
   --red: #ef6464;

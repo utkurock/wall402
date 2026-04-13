@@ -38,7 +38,7 @@ function MiniChart({ symbol, label }: { symbol: string; label: string }) {
       height: "100%",
       locale: "en",
       dateRange: "1D",
-      colorTheme: "light",
+      colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light",
       isTransparent: true,
       autosize: true,
       largeChartUrl: "",
@@ -72,7 +72,7 @@ function TechnicalAnalysis({ symbol }: { symbol: string }) {
       symbol,
       showIntervalTabs: true,
       locale: "en",
-      colorTheme: "light",
+      colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light",
       isTransparent: true,
     });
     ref.current.appendChild(script);

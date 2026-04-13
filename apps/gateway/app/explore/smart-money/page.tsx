@@ -33,7 +33,7 @@ function TickerWidget() {
         { proName: "BINANCE:SOLUSDT", title: "SOL" },
         { proName: "BINANCE:BNBUSDT", title: "BNB" },
       ],
-      showSymbolLogo: true, colorTheme: "light", isTransparent: true, displayMode: "adaptive", locale: "en",
+      showSymbolLogo: true, colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light", isTransparent: true, displayMode: "adaptive", locale: "en",
     });
     ref.current.appendChild(script);
   }, []);
@@ -49,7 +49,7 @@ function HeatmapWidget() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       dataSource: "Crypto", blockSize: "market_cap_calc", blockColor: "change",
-      locale: "en", symbolUrl: "", colorTheme: "light", hasTopBar: false,
+      locale: "en", symbolUrl: "", colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light", hasTopBar: false,
       isDataSetEnabled: false, isZoomEnabled: false, hasSymbolTooltip: true,
       width: "100%", height: 400, isTransparent: true,
     });

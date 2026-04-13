@@ -176,9 +176,17 @@ async function handle(
       endpointLabel: endpoint.label,
     });
   } catch (err) {
+    const msg = (err as Error).message ?? "";
+    const isInsufficientFunds = msg.includes("insufficient") || msg.includes("funds") || msg.includes("balance") || msg.includes("revert");
     return NextResponse.json(
-      { error: "settlement_failed", reason: (err as Error).message },
-      { status: 502 },
+      {
+        error: "settlement_failed",
+        reason: isInsufficientFunds
+          ? "Insufficient USDG balance on X Layer. You need USDG in your wallet to complete the payment. Swap OKB or other tokens to USDG first."
+          : msg,
+        hint: isInsufficientFunds ? "swap" : undefined,
+      },
+      { status: 402 },
     );
   }
 
