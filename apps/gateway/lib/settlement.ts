@@ -90,7 +90,9 @@ export async function settle(
   };
 
   // ─── MOCK MODE ────────────────────────────────────────
-  if (env.WALL402_MOCK_SETTLEMENT) {
+  // Read directly from process.env at runtime to bypass build-time caching
+  const isMock = (process.env.WALL402_MOCK_SETTLEMENT ?? "true") === "true";
+  if (isMock) {
     const fakeTx =
       "0x" +
       Array.from({ length: 64 }, () =>
