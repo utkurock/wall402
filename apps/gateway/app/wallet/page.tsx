@@ -214,7 +214,7 @@ export default function WalletPage() {
       </div>
 
       {/* Search */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 32 }}>
+      <div className="wallet-search" style={{ display: "flex", gap: 8, marginBottom: 32 }}>
         <input
           className="input"
           placeholder="0x... or vitalik.eth"
@@ -279,6 +279,7 @@ export default function WalletPage() {
 
           {/* Balance hero */}
           <div
+            className="wallet-balance"
             style={{
               border: "1px solid var(--border)",
               borderTop: "none",
@@ -377,6 +378,10 @@ export default function WalletPage() {
         @media (max-width: 768px) {
           main { padding: 20px 16px 60px !important; max-width: 100% !important; }
           main input, main select { font-size: 14px !important; }
+          .wallet-search { flex-direction: column !important; }
+          .wallet-search select { width: 100% !important; }
+          .wallet-balance { flex-direction: column !important; gap: 8px !important; }
+          .wallet-balance > div:last-child { font-size: 16px !important; }
         }
       `}</style>
     </main>

@@ -22,7 +22,7 @@ function SwapWidget() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       symbol: "OKX:OKBUSDT", width: "100%", height: "100%", locale: "en",
-      dateRange: "1D", colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light", isTransparent: true, autosize: true,
+      dateRange: "12M", colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light", isTransparent: true, autosize: true,
     });
     ref.current.appendChild(script);
   }, []);

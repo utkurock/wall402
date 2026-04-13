@@ -14,13 +14,11 @@ export default function Footer() {
           <span style={{ fontWeight: 700, color: "var(--fg)" }}>wall402_</span>
           {" "}// x402 paywall on X Layer
         </span>
-        <div className="footer-links" style={{ display: "flex", gap: 24 }}>
-          <a href="https://x.com/Utkurocks" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            twitter
-          </a>
-          <a href="https://github.com/utkurock/wall402" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            github
-          </a>
+        <div className="footer-links" style={{ display: "flex", gap: 20 }}>
+          <a href="https://x.com/Utkurocks" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>twitter</a>
+          <a href="https://github.com/utkurock/wall402" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>github</a>
+          <a href="https://web3.okx.com/en/dex-swap/bridge" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>bridge</a>
+          <a href="https://www.okx.com/web3/explorer/xlayer" target="_blank" rel="noreferrer" style={{ color: "var(--muted)", textDecoration: "none" }}>scan</a>
         </div>
         <span className="footer-network" style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--muted)" }}>
           X Layer mainnet

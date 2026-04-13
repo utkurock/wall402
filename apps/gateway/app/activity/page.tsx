@@ -242,6 +242,7 @@ export default function DashboardPage() {
               return (
                 <Fragment key={r.txHash}>
                   <div
+                    className="tx-row"
                     onClick={() => setExpanded(isOpen ? null : r.txHash)}
                     style={{
                       display: "grid",
@@ -324,6 +325,12 @@ export default function DashboardPage() {
       <style>{`
         @media (max-width: 768px) {
           main { padding: 20px 16px 60px !important; max-width: 100% !important; }
+          main > div:nth-child(2) { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+          main > div:nth-child(2) > div { padding: 12px 14px !important; }
+          .tx-row { grid-template-columns: 60px 1fr auto !important; gap: 8px !important; font-size: 11px !important; }
+          .tx-row > div:nth-child(3) { display: none !important; }
+          .tx-row > div:nth-child(5) { display: none !important; }
+          .revenue-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
       `}</style>
     </main>

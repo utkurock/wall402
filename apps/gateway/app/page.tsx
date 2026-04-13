@@ -72,6 +72,7 @@ export default function HomePage() {
       >
         <BackgroundPaths>
           <div
+            className="hero-inner"
             style={{
               background: "#1a1714",
               borderRadius: 16,
@@ -99,7 +100,7 @@ export default function HomePage() {
               <p style={{ fontSize: 14, marginTop: 14, color: "#8a857c", lineHeight: 1.6, maxWidth: 340 }}>
                 AI agents pay per call. Zero gas settlement on X Layer. Any token accepted.
               </p>
-              <div style={{ marginTop: 20, display: "flex", gap: 8 }}>
+              <div className="hero-btns" style={{ marginTop: 20, display: "flex", gap: 8 }}>
                 <a href="/explore" style={{ padding: "9px 20px", borderRadius: 8, background: "#f0ece4", color: "#1a1714", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
                   Explore Products →
                 </a>
@@ -109,7 +110,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div style={{ position: "relative", textAlign: "right" }}>
+            <div className="hero-right" style={{ position: "relative", textAlign: "right" }}>
               <div style={{ fontFamily: "var(--mono)", fontSize: 36, fontWeight: 700, color: "#f0ece4", letterSpacing: "-0.03em" }}>
                 {vol} <span style={{ fontSize: 16, color: "#8a857c" }}>USDG</span>
               </div>
@@ -128,7 +129,7 @@ export default function HomePage() {
         <div style={{ fontSize: 12, fontFamily: "var(--mono)", color: "var(--muted)", marginBottom: 12 }}>~/products</div>
         <div style={{ border: "1px solid var(--border)", borderRadius: 12, overflow: "hidden" }}>
           {/* Table header */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 140px 100px 120px", padding: "10px 20px", borderBottom: "1px solid var(--border)", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)" }}>
+          <div className="products-table-header" style={{ display: "grid", gridTemplateColumns: "1fr 140px 100px 120px", padding: "10px 20px", borderBottom: "1px solid var(--border)", fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)" }}>
             <span>Product</span>
             <span>Type</span>
             <span>Price</span>
@@ -142,7 +143,7 @@ export default function HomePage() {
             { name: "Wallet Intelligence", kind: "wallet", price: "0.025 USDG", href: "/explore/wallet-intel" },
             { name: "Smart Money Alerts", kind: "alpha", price: "0.015 USDG", href: "/explore/smart-money" },
           ].map((p) => (
-            <a key={p.name} href={p.href} style={{ display: "grid", gridTemplateColumns: "1fr 140px 100px 120px", padding: "14px 20px", borderBottom: "1px solid var(--border)", alignItems: "center", fontSize: 13, textDecoration: "none", color: "inherit", transition: "background 0.15s" }}>
+            <a key={p.name} href={p.href} className="products-table-row" style={{ display: "grid", gridTemplateColumns: "1fr 140px 100px 120px", padding: "14px 20px", borderBottom: "1px solid var(--border)", alignItems: "center", fontSize: 13, textDecoration: "none", color: "inherit", transition: "background 0.15s" }}>
               <span style={{ fontWeight: 600 }}>{p.name}</span>
               <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--muted)" }}>{p.kind}</span>
               <span style={{ fontFamily: "var(--mono)", fontSize: 12 }}>{p.price}</span>
@@ -222,17 +223,30 @@ export default function HomePage() {
 
       <style>{`
         @media (max-width: 768px) {
-          main section { padding-left: 16px !important; padding-right: 16px !important; }
-          main section > div[style*="borderRadius: 16"] { padding: 28px 20px 24px !important; flex-direction: column !important; gap: 16px !important; }
-          main section > div[style*="borderRadius: 16"] h1 { font-size: 28px !important; }
-          main section > div[style*="borderRadius: 16"] > div:last-child { text-align: left !important; }
-          main section > div[style*="borderRadius: 16"] > div:last-child > div:first-child { font-size: 24px !important; }
-          main section > div[style*="gridTemplateColumns: \"1fr 140px"] { display: flex !important; flex-direction: column !important; }
-          main section > div[style*="gridTemplateColumns: \"1fr 140px"] > div { display: grid !important; grid-template-columns: 1fr auto !important; padding: 12px 16px !important; }
-          main section > div[style*="gridTemplateColumns: \"1fr 140px"] > a { display: grid !important; grid-template-columns: 1fr auto !important; padding: 12px 16px !important; }
-          main section div[style*="gridTemplateColumns: \"repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-          main section div[style*="gridTemplateColumns: \"repeat(3"] { grid-template-columns: 1fr !important; }
-          main section div[style*="gridTemplateColumns: \"1fr auto 1fr auto"] { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4px !important; }
+          main section { padding-left: 16px !important; padding-right: 16px !important; max-width: 100% !important; }
+          /* Hero banner */
+          .hero-inner { padding: 24px 16px 20px !important; flex-direction: column !important; gap: 12px !important; }
+          .hero-inner h1 { font-size: 24px !important; }
+          .hero-inner .hero-right { text-align: left !important; }
+          .hero-inner .hero-right > div:first-child { font-size: 20px !important; }
+          .hero-inner .hero-btns { flex-wrap: wrap !important; }
+          .hero-inner .hero-btns a { font-size: 12px !important; padding: 8px 14px !important; }
+          /* Products table */
+          .products-section { overflow-x: auto !important; }
+          .products-table-header { grid-template-columns: 1fr 60px 70px 60px !important; font-size: 9px !important; padding: 8px 12px !important; }
+          .products-table-row { grid-template-columns: 1fr 60px 70px 60px !important; font-size: 12px !important; padding: 10px 12px !important; }
+          .products-table-row span:first-child { font-size: 12px !important; }
+          /* How it works - 2x2 grid */
+          .how-steps { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+          .how-steps > div:nth-child(odd) > svg { display: none; }
+          /* Tech stack row */
+          .tech-row { grid-template-columns: 1fr !important; }
+          /* Quick links */
+          .quick-links { flex-direction: column !important; }
+          /* Protocol flow */
+          .protocol-flow { font-size: 11px !important; }
+          .protocol-tags { gap: 4px !important; }
+          .protocol-tags > span { font-size: 9px !important; padding: 3px 6px !important; }
         }
       `}</style>
     </main>
