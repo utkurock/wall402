@@ -1,0 +1,23 @@
+{
+  "name": "wall402",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent-facing x402 paywall gateway on X Layer — OKX Build X Hackathon 2026",
+  "scripts": {
+    "dev:gateway": "pnpm --filter @wall402/gateway dev",
+    "dev:mcp": "pnpm --filter @wall402/mcp-server dev",
+    "demo": "pnpm --filter @wall402/gateway test:e2e",
+    "mcp": "node apps/mcp-server/dist/index.js",
+    "mcp:build": "pnpm --filter @wall402/mcp-server build",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "pg": "^8.20.0"
+  }
+}

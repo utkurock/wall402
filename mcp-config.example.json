@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "wall402": {
+      "command": "node",
+      "args": ["~/.wall402/apps/mcp-server/dist/index.js"],
+      "env": {
+        "WALL402_GATEWAY_URL": "http://localhost:3402",
+        "ONCHAINOS_CLI": "onchainos"
+      }
+    }
+  }
+}

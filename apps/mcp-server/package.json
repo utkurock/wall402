@@ -1,0 +1,31 @@
+{
+  "name": "@wall402/mcp-server",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "wall402 MCP server — x402 paywall agent tools for X Layer (Uniswap swap, security scan, TEE signing)",
+  "main": "./dist/index.js",
+  "bin": {
+    "wall402-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "keywords": ["mcp", "x402", "paywall", "xlayer", "uniswap", "agent", "web3"],
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@wall402/core": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

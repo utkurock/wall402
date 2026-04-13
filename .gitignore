@@ -1,0 +1,39 @@
+# deps
+node_modules
+.pnpm-store
+
+# next.js
+.next/
+out/
+build/
+dist/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ts
+*.tsbuildinfo
+
+# coverage
+coverage/
+
+# turbo
+.turbo/
+
+# skill install artifacts — symlinks, not source
+.agents/
+.install-onchainos.ps1
