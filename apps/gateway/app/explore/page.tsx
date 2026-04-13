@@ -386,7 +386,7 @@ export default function ExplorePage() {
               className="panel card-hover fade-in"
               style={{ padding: 0, overflow: "hidden" }}
             >
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", height: 280 }}>
+              <div className="product-card-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", height: 280 }}>
                 {/* Left: info */}
                 <div style={{ padding: "28px 32px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
@@ -558,7 +558,11 @@ export default function ExplorePage() {
         </section>
       )}
 
-
+      <style>{`
+        @media (max-width: 768px) {
+          .product-card-grid { grid-template-columns: 1fr !important; height: auto !important; }
+        }
+      `}</style>
     </main>
   );
 }

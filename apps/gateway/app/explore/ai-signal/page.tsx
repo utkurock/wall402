@@ -268,6 +268,14 @@ export default function AISignalPage() {
           )}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          main { padding: 20px 16px 60px !important; }
+          main > div:nth-child(4) { flex-direction: column !important; }
+          main > div:nth-child(4) > div { min-height: 160px; }
+          main > div:nth-child(5) { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </main>
   );
 }

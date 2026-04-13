@@ -321,6 +321,11 @@ export default function DashboardPage() {
         )}
       </div>
 
+      <style>{`
+        @media (max-width: 768px) {
+          main { padding: 20px 16px 60px !important; max-width: 100% !important; }
+        }
+      `}</style>
     </main>
   );
 }

@@ -373,6 +373,12 @@ export default function WalletPage() {
         </div>
       )}
 
+      <style>{`
+        @media (max-width: 768px) {
+          main { padding: 20px 16px 60px !important; max-width: 100% !important; }
+          main input, main select { font-size: 14px !important; }
+        }
+      `}</style>
     </main>
   );
 }

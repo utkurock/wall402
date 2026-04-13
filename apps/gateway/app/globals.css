@@ -276,4 +276,12 @@ td { color: var(--fg-dim); }
 }
 
 /* ── Gradient text ────────────────────────────────────── */
-/* removed — gradient text disabled */
+/* ── Mobile responsive ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .section-label { font-size: 9px; margin-bottom: 20px; }
+  .panel { padding: 16px; border-radius: 10px; }
+  .btn { padding: 8px 14px; font-size: 12px; }
+  .btn-primary { padding: 10px 18px; }
+  table { font-size: 11px; }
+  th, td { padding: 8px 6px; }
+}

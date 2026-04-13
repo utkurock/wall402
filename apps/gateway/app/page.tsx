@@ -220,6 +220,16 @@ export default function HomePage() {
         </p>
       </section>
 
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-banner { padding: 32px 20px 28px !important; flex-direction: column !important; align-items: flex-start !important; }
+          .hero-banner h1 { font-size: 28px !important; }
+          .hero-banner .hero-right { margin-top: 16px; }
+          .products-table { overflow-x: auto; }
+          .products-table > div { min-width: 500px; }
+          .how-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </main>
   );
 }
