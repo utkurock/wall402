@@ -149,7 +149,7 @@ export function ProductPage({
         paid: replay.ok,
         body,
         settlement: paymentResponse ? JSON.parse(paymentResponse) : undefined,
-        error: replay.ok ? undefined : `HTTP ${replay.status}`,
+        error: replay.ok ? undefined : ((typeof body === "object" && body !== null && "reason" in (body as Record<string,unknown>)) ? String((body as Record<string,unknown>).reason) : `Payment failed (${replay.status})`),
       });
     } catch (err) {
       setResult({ paid: false, error: (err as Error).message });

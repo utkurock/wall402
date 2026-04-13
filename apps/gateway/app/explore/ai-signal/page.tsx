@@ -150,7 +150,7 @@ export default function AISignalPage() {
       let body: unknown = bodyText;
       try { body = JSON.parse(bodyText); } catch { /* */ }
       const pr = replay.headers.get("payment-response");
-      setResult({ paid: replay.ok, body, settlement: pr ? JSON.parse(pr) : undefined, error: replay.ok ? undefined : `HTTP ${replay.status}` });
+      setResult({ paid: replay.ok, body, settlement: pr ? JSON.parse(pr) : undefined, error: replay.ok ? undefined : ((typeof body === "object" && body !== null && "reason" in (body as Record<string,unknown>)) ? String((body as Record<string,unknown>).reason) : `Payment failed (${replay.status})`) });
     } catch (err) {
       setResult({ paid: false, error: (err as Error).message });
     } finally {

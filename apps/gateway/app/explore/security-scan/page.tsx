@@ -69,7 +69,7 @@ export default function SecurityScanPage() {
       const replay = await fetch(`/api/paywall/${endpoint.id}${qs}`, { headers: { "PAYMENT-SIGNATURE": btoa(JSON.stringify({ x402Version: 2, resource: challenge.resource, accepted, payload: { signature: sig, authorization: { from: account, to: accepted.payTo, value: accepted.amount, validAfter: "0", validBefore: String(now + 300), nonce } } })) } });
       const body = await replay.json().catch(() => replay.text());
       const pr = replay.headers.get("payment-response");
-      setResult({ paid: replay.ok, body, settlement: pr ? JSON.parse(pr) : undefined, error: replay.ok ? undefined : `HTTP ${replay.status}` });
+      setResult({ paid: replay.ok, body, settlement: pr ? JSON.parse(pr) : undefined, error: replay.ok ? undefined : ((typeof body === "object" && body !== null && "reason" in (body as Record<string,unknown>)) ? String((body as Record<string,unknown>).reason) : `Payment failed (${replay.status})`) });
     } catch (err) { setResult({ paid: false, error: (err as Error).message }); }
     finally { setBuying(false); }
   };

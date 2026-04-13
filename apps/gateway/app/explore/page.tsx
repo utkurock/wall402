@@ -341,7 +341,7 @@ export default function ExplorePage() {
           ? JSON.parse(paymentResponse)
           : undefined,
         body,
-        error: replay.ok ? undefined : `HTTP ${replay.status}`,
+        error: replay.ok ? undefined : ((typeof body === "object" && body !== null && "reason" in (body as Record<string,unknown>)) ? String((body as Record<string,unknown>).reason) : `Payment failed (${replay.status})`),
       });
     } catch (err) {
       setResult({
