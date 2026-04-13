@@ -24,6 +24,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid wallet address" }, { status: 400 });
   }
 
+  // Enforce $0.50 max swap limit
+  const numAmount = parseFloat(amount);
+  if (from === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" && numAmount > 0.007) {
+    return NextResponse.json({ ok: false, error: "Max swap: ~$0.50 per tx (0.006 OKB)" }, { status: 400 });
+  }
+  if (from !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" && numAmount > 0.6) {
+    return NextResponse.json({ ok: false, error: "Max swap: $0.50 per tx" }, { status: 400 });
+  }
+
   const result = spawnSync(CLI, [
     "swap", "execute",
     "--from", from,

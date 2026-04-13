@@ -149,9 +149,10 @@ export async function settle(
 
   const result = spawnSync(cli, [
     "wallet", "contract-call",
-    "--chain", network === "mainnet" ? "xlayer" : "xlayer",
-    "--contract", env.SETTLEMENT_TOKEN_ADDRESS,
-    "--data", txData,
+    "--chain", "xlayer",
+    "--to", env.SETTLEMENT_TOKEN_ADDRESS,
+    "--input-data", txData,
+    "--force",
   ], { encoding: "utf8", timeout: 60_000 });
 
   let txHash: string;

@@ -136,16 +136,34 @@ export default function SwapPage() {
         {/* Right: swap form */}
         <div>
           <div className="panel">
+            {/* Limit notice */}
+            <div style={{ padding: "10px 14px", border: "1px solid var(--border)", borderRadius: 8, marginBottom: 12, fontSize: 11, color: "var(--muted)", textAlign: "center" }}>
+              Max swap: $0.50 equivalent per transaction. Powered by TEE Agentic Wallet.
+            </div>
+
             {/* From */}
             <div style={{ marginBottom: 4 }}>
-              <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)", marginBottom: 8 }}>You pay</div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)" }}>You pay</span>
+                <button onClick={() => { setAmount(fromToken === "OKB" ? "0.006" : "0.5"); setQuote(null); }} style={{ background: "none", border: "1px solid var(--border)", borderRadius: 4, padding: "2px 8px", fontSize: 10, fontFamily: "var(--mono)", color: "var(--fg-dim)", cursor: "pointer" }}>
+                  MAX
+                </button>
+              </div>
               <div style={{ display: "flex", gap: 8 }}>
                 <input
                   className="input"
                   type="number"
                   placeholder="0.00"
                   value={amount}
-                  onChange={(e) => { setAmount(e.target.value); setQuote(null); setSwapResult(null); }}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    // Enforce $0.50 limit
+                    const numVal = parseFloat(val);
+                    if (fromToken === "OKB" && numVal > 0.006) { setAmount("0.006"); }
+                    else if (fromToken !== "OKB" && numVal > 0.5) { setAmount("0.5"); }
+                    else { setAmount(val); }
+                    setQuote(null); setSwapResult(null);
+                  }}
                   style={{ flex: 1, fontSize: 24, fontWeight: 600, fontFamily: "var(--mono)", padding: "16px" }}
                 />
                 <select
