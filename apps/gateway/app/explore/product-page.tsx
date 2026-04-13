@@ -78,6 +78,24 @@ export function ProductPage({
     setBuying(true);
     setResult(null);
 
+    // Auto-switch to X Layer if needed
+    try {
+      const chainId = await eth.request({ method: "eth_chainId" }) as string;
+      if (parseInt(chainId, 16) !== 196) {
+        try {
+          await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0xc4" }] });
+        } catch (switchErr: unknown) {
+          if ((switchErr as { code?: number })?.code === 4902) {
+            await eth.request({ method: "wallet_addEthereumChain", params: [{ chainId: "0xc4", chainName: "X Layer", rpcUrls: ["https://rpc.xlayer.tech"], nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 }, blockExplorerUrls: ["https://www.okx.com/web3/explorer/xlayer"] }] });
+          } else throw switchErr;
+        }
+      }
+    } catch (err) {
+      setResult({ paid: false, error: "Please switch to X Layer network" });
+      setBuying(false);
+      return;
+    }
+
     const qs = input ? `?q=${encodeURIComponent(input)}` : "";
     try {
       const challengeRes = await fetch(`/api/paywall/${endpoint.id}${qs}`);

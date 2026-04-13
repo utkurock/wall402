@@ -108,6 +108,7 @@ export default function MarketOverviewPage() {
     const eth = (window as unknown as { ethereum?: EIP1193Provider }).ethereum;
     if (!eth) return;
     setBuying(true); setResult(null);
+    try { const cid = await eth.request({ method: "eth_chainId" }) as string; if (parseInt(cid,16)!==196) { try { await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0xc4" }] }); } catch(e:unknown) { if ((e as {code?:number})?.code===4902) { await eth.request({ method: "wallet_addEthereumChain", params: [{ chainId: "0xc4", chainName: "X Layer", rpcUrls: ["https://rpc.xlayer.tech"], nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 }, blockExplorerUrls: ["https://www.okx.com/web3/explorer/xlayer"] }] }); } else throw e; } } } catch { setResult({ paid: false, error: "Please switch to X Layer" }); setBuying(false); return; }
     try {
       const challengeRes = await fetch(`/api/paywall/${endpoint.id}`);
       if (challengeRes.status !== 402) throw new Error(`Expected 402`);

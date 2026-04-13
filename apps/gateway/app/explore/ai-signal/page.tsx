@@ -114,6 +114,13 @@ export default function AISignalPage() {
     if (!eth) return;
     setBuying(true);
     setResult(null);
+    try {
+      const chainId = await eth.request({ method: "eth_chainId" }) as string;
+      if (parseInt(chainId, 16) !== 196) {
+        try { await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: "0xc4" }] }); }
+        catch (e: unknown) { if ((e as {code?:number})?.code === 4902) { await eth.request({ method: "wallet_addEthereumChain", params: [{ chainId: "0xc4", chainName: "X Layer", rpcUrls: ["https://rpc.xlayer.tech"], nativeCurrency: { name: "OKB", symbol: "OKB", decimals: 18 }, blockExplorerUrls: ["https://www.okx.com/web3/explorer/xlayer"] }] }); } else throw e; }
+      }
+    } catch { setResult({ paid: false, body: undefined, error: "Please switch to X Layer" }); setBuying(false); return; }
     const qs = `?q=${encodeURIComponent(asset)}`;
     try {
       const challengeRes = await fetch(`/api/paywall/${endpoint.id}${qs}`);
