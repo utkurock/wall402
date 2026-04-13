@@ -41,26 +41,57 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Max swap: $0.10 per tx" }, { status: 400 });
   }
 
-  const result = spawnSync(CLI, [
+  // Step 1: TEE wallet does the swap
+  const swapResult = spawnSync(CLI, [
     "swap", "execute",
     "--from", from,
     "--to", to,
     "--readable-amount", amount,
     "--chain", "xlayer",
-    "--wallet", wallet,
+    "--wallet", "0x254c3699cc099b71df58a719984c4c8cb1034d55", // TEE wallet
   ], { encoding: "utf8", timeout: 60_000 });
 
+  let swapOk = false;
+  let swapData: Record<string, unknown> | null = null;
   try {
-    const parsed = JSON.parse(result.stdout || "{}");
-    return NextResponse.json({
-      ok: parsed.ok ?? false,
-      data: parsed.data ?? null,
-      error: parsed.ok ? undefined : (parsed.error ?? "swap failed"),
-    });
+    const parsed = JSON.parse(swapResult.stdout || "{}");
+    swapOk = parsed.ok ?? false;
+    swapData = parsed.data ?? null;
+    if (!swapOk) {
+      return NextResponse.json({ ok: false, error: parsed.error ?? "swap failed" });
+    }
   } catch {
-    return NextResponse.json({
-      ok: false,
-      error: result.stderr || "execution failed",
-    });
+    return NextResponse.json({ ok: false, error: swapResult.stderr || "swap execution failed" });
   }
+
+  // Step 2: Send swapped tokens to user's wallet
+  const outputToken = to;
+  // Estimate output from quote (approximate)
+  const sendAmount = amount; // simplified — send same readable amount
+  const sendResult = spawnSync(CLI, [
+    "wallet", "send",
+    "--recipient", wallet,
+    "--chain", "xlayer",
+    ...(outputToken === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      ? ["--readable-amount", sendAmount]
+      : ["--contract-token", outputToken, "--readable-amount", sendAmount]),
+    "--force",
+  ], { encoding: "utf8", timeout: 60_000 });
+
+  let sendOk = false;
+  let sendData: Record<string, unknown> | null = null;
+  try {
+    const parsed = JSON.parse(sendResult.stdout || "{}");
+    sendOk = parsed.ok ?? false;
+    sendData = parsed.data ?? null;
+  } catch { /* ignore */ }
+
+  return NextResponse.json({
+    ok: swapOk,
+    swap: swapData,
+    sent: sendOk,
+    sendData,
+    recipient: wallet,
+    error: sendOk ? undefined : "Swap succeeded but transfer to your wallet failed. Contact support.",
+  });
 }

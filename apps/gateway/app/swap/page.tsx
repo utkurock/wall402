@@ -241,11 +241,11 @@ export default function SwapPage() {
             )}
 
             {/* Swap button */}
-            <a href={`https://web3.okx.com/en/dex-swap?inputChain=196&inputCurrency=${fromToken === "OKB" ? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" : "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8"}&outputCurrency=${toToken === "OKB" ? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" : "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8"}`} target="_blank" rel="noreferrer" className="btn btn-primary" style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 15, textDecoration: "none" }}>
-              Swap {fromToken} → {toToken} on OKX DEX →
-            </a>
+            <button className="btn btn-primary" onClick={executeSwap} disabled={!account || swapping || !quote || typeof quote.error === "string"} style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 15 }}>
+              {swapping ? <><span className="spinner" style={{ marginRight: 8 }} />Swapping &amp; sending...</> : !account ? "Connect wallet" : !quote ? "Get quote first" : `Swap ${fromToken} → ${toToken}`}
+            </button>
             <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, textAlign: "center" }}>
-              Real-time quote by wall402 · Execute on OKX DEX with your own wallet
+              TEE wallet swaps &amp; sends to your wallet. Max $0.10 · OKB ↔ USDG
             </div>
 
             <div style={{ marginTop: 16, padding: "12px 14px", border: "1px solid var(--border)", borderRadius: 8, fontSize: 12, textAlign: "center" }}>
@@ -262,9 +262,13 @@ export default function SwapPage() {
             <div className="panel fade-in" style={{ marginTop: 16, border: swapResult.ok ? "1px solid var(--border)" : "1px solid var(--danger)" }}>
               {swapResult.ok ? (
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Swap submitted</div>
-                  <div style={{ fontSize: 12, color: "var(--muted)" }}>
-                    Transaction has been sent to X Layer via onchainos. Check your wallet for confirmation.
+                  <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>
+                    {(swapResult as Record<string, unknown>).sent ? "Swap complete — tokens sent!" : "Swap done, sending to wallet..."}
+                  </div>
+                  <div style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
+                    {(swapResult as Record<string, unknown>).sent
+                      ? `${toToken} has been sent to your wallet (${account ? account.slice(0, 8) + "..." : ""}). Check your balance on X Layer.`
+                      : String((swapResult as Record<string, unknown>).error ?? "Swap succeeded but transfer is pending.")}
                   </div>
                 </div>
               ) : (
