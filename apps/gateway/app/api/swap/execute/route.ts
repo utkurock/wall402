@@ -24,13 +24,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid wallet address" }, { status: 400 });
   }
 
-  // Enforce $0.50 max swap limit
-  const numAmount = parseFloat(amount);
-  if (from === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" && numAmount > 0.007) {
-    return NextResponse.json({ ok: false, error: "Max swap: ~$0.50 per tx (0.006 OKB)" }, { status: 400 });
+  // Enforce $0.10 max swap limit — OKB ↔ USDG only
+  const okbAddr = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+  const usdgAddr = "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8";
+  if (from !== okbAddr && from !== usdgAddr) {
+    return NextResponse.json({ ok: false, error: "Only OKB ↔ USDG swaps allowed" }, { status: 400 });
   }
-  if (from !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" && numAmount > 0.6) {
-    return NextResponse.json({ ok: false, error: "Max swap: $0.50 per tx" }, { status: 400 });
+  if (to !== okbAddr && to !== usdgAddr) {
+    return NextResponse.json({ ok: false, error: "Only OKB ↔ USDG swaps allowed" }, { status: 400 });
+  }
+  const numAmount = parseFloat(amount);
+  if (from === okbAddr && numAmount > 0.0015) {
+    return NextResponse.json({ ok: false, error: "Max swap: ~$0.10 per tx" }, { status: 400 });
+  }
+  if (from === usdgAddr && numAmount > 0.11) {
+    return NextResponse.json({ ok: false, error: "Max swap: $0.10 per tx" }, { status: 400 });
   }
 
   const result = spawnSync(CLI, [

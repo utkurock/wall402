@@ -9,8 +9,6 @@ interface EIP1193Provider {
 const TOKENS = [
   { symbol: "OKB", address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", native: true },
   { symbol: "USDG", address: "0x4ae46a509f6b1d9056937ba4500cb143933d2dc8" },
-  { symbol: "USDT", address: "0x779ded0c9e1022225f8e0630b35a9b54be713736" },
-  { symbol: "WOKB", address: "0xe538905cf8410324e03a5a23c1c177a474d59b2b" },
 ];
 
 function SwapWidget() {
@@ -138,14 +136,14 @@ export default function SwapPage() {
           <div className="panel">
             {/* Limit notice */}
             <div style={{ padding: "10px 14px", border: "1px solid var(--border)", borderRadius: 8, marginBottom: 12, fontSize: 11, color: "var(--muted)", textAlign: "center" }}>
-              Max swap: $0.50 equivalent per transaction. Powered by TEE Agentic Wallet.
+              Instant swap: max $0.10 per tx · OKB ↔ USDG only · Powered by TEE Agentic Wallet
             </div>
 
             {/* From */}
             <div style={{ marginBottom: 4 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                 <span style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)" }}>You pay</span>
-                <button onClick={() => { setAmount(fromToken === "OKB" ? "0.006" : "0.5"); setQuote(null); }} style={{ background: "none", border: "1px solid var(--border)", borderRadius: 4, padding: "2px 8px", fontSize: 10, fontFamily: "var(--mono)", color: "var(--fg-dim)", cursor: "pointer" }}>
+                <button onClick={() => { setAmount(fromToken === "OKB" ? "0.0012" : "0.1"); setQuote(null); }} style={{ background: "none", border: "1px solid var(--border)", borderRadius: 4, padding: "2px 8px", fontSize: 10, fontFamily: "var(--mono)", color: "var(--fg-dim)", cursor: "pointer" }}>
                   MAX
                 </button>
               </div>
@@ -159,8 +157,8 @@ export default function SwapPage() {
                     const val = e.target.value;
                     // Enforce $0.50 limit
                     const numVal = parseFloat(val);
-                    if (fromToken === "OKB" && numVal > 0.006) { setAmount("0.006"); }
-                    else if (fromToken !== "OKB" && numVal > 0.5) { setAmount("0.5"); }
+                    if (fromToken === "OKB" && numVal > 0.0012) { setAmount("0.0012"); }
+                    else if (fromToken !== "OKB" && numVal > 0.1) { setAmount("0.1"); }
                     else { setAmount(val); }
                     setQuote(null); setSwapResult(null);
                   }}
@@ -243,11 +241,11 @@ export default function SwapPage() {
             )}
 
             {/* Swap button */}
-            <a href="https://web3.okx.com/en/dex-swap" target="_blank" rel="noreferrer" className="btn btn-primary" style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 15, textDecoration: "none" }}>
-              Swap on OKX DEX →
-            </a>
+            <button className="btn btn-primary" onClick={executeSwap} disabled={!account || swapping || !quote || typeof quote.error === "string"} style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 15 }}>
+              {swapping ? <><span className="spinner" style={{ marginRight: 8 }} />Swapping...</> : !account ? "Connect wallet" : !quote ? "Get quote first" : `Swap ${fromToken} → ${toToken}`}
+            </button>
             <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 8, textAlign: "center" }}>
-              Quote powered by wall402. Swap directly on OKX DEX with your own wallet.
+              Instant swap via TEE wallet. Max $0.10 per transaction. OKB ↔ USDG only.
             </div>
 
             <div style={{ marginTop: 16, padding: "12px 14px", border: "1px solid var(--border)", borderRadius: 8, fontSize: 12, textAlign: "center" }}>
