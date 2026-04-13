@@ -90,7 +90,7 @@ export default function SecurityScanPage() {
         {endpoint && <div style={{ textAlign: "right" }}><div style={{ fontFamily: "var(--mono)", fontSize: 24, fontWeight: 700 }}>{fmtPrice(endpoint.priceAmount)}</div><div style={{ fontSize: 11, color: "var(--muted)" }}>per scan</div></div>}
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 24 }}>
+      <div className="sec-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 24 }}>
         {/* Left: scan info + risk indicators */}
         <div>
           {/* Token input */}
@@ -156,6 +156,7 @@ export default function SecurityScanPage() {
           )}
         </div>
       </div>
+      <style>{`@media(max-width:768px){.sec-grid{grid-template-columns:1fr!important}main{padding:20px 16px 60px!important}}`}</style>
     </main>
   );
 }

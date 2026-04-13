@@ -143,7 +143,7 @@ export default function SmartMoneyPage() {
       {/* Ticker tape */}
       <TickerWidget />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 20, marginBottom: 24 }}>
+      <div className="sm-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 20, marginBottom: 24 }}>
         {/* Left: heatmap */}
         <div>
           <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)", marginBottom: 8 }}>
@@ -199,6 +199,7 @@ export default function SmartMoneyPage() {
           )}
         </div>
       </div>
+      <style>{`@media(max-width:768px){.sm-grid{grid-template-columns:1fr!important}main{padding:20px 16px 60px!important}}`}</style>
     </main>
   );
 }

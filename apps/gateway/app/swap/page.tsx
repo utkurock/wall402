@@ -22,7 +22,7 @@ function SwapWidget() {
     script.async = true;
     script.innerHTML = JSON.stringify({
       symbol: "OKX:OKBUSDT", width: "100%", height: "100%", locale: "en",
-      dateRange: "1D", colorTheme: "light", isTransparent: true, autosize: true,
+      dateRange: "1D", colorTheme: document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light", isTransparent: true, autosize: true,
     });
     ref.current.appendChild(script);
   }, []);
@@ -106,7 +106,7 @@ export default function SwapPage() {
         <span style={{ fontSize: 11, padding: "4px 10px", borderRadius: 6, border: "1px solid var(--border)", color: "var(--muted)" }}>X Layer · 196</span>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 440px", gap: 24 }}>
+      <div className="swap-grid" style={{ display: "grid", gridTemplateColumns: "1fr 440px", gap: 24 }}>
         {/* Left: chart + info */}
         <div>
           <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)", marginBottom: 8 }}>
@@ -258,6 +258,12 @@ export default function SwapPage() {
           )}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .swap-grid { grid-template-columns: 1fr !important; }
+          main { padding: 20px 16px 60px !important; }
+        }
+      `}</style>
     </main>
   );
 }

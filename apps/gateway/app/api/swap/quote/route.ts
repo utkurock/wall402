@@ -18,13 +18,27 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "missing params: from, to, amount" }, { status: 400 });
   }
 
-  const result = spawnSync(CLI, [
+  // Try readable-amount first, fall back to raw amount
+  let result = spawnSync(CLI, [
     "swap", "quote",
     "--from", from,
     "--to", to,
     "--readable-amount", amount,
     "--chain", "xlayer",
   ], { encoding: "utf8", timeout: 15_000 });
+
+  // If readable-amount fails, try with raw wei
+  if (result.stdout?.includes('"ok": false') || result.status !== 0) {
+    const decimals = from === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" ? 18 : 6;
+    const rawAmount = BigInt(Math.floor(parseFloat(amount) * 10 ** decimals)).toString();
+    result = spawnSync(CLI, [
+      "swap", "quote",
+      "--from", from,
+      "--to", to,
+      "--amount", rawAmount,
+      "--chain", "xlayer",
+    ], { encoding: "utf8", timeout: 15_000 });
+  }
 
   try {
     const parsed = JSON.parse(result.stdout || "{}");

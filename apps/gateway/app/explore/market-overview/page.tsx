@@ -147,14 +147,14 @@ export default function MarketOverviewPage() {
       <TickerWidget />
 
       {/* Charts grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
+      <div className="charts-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
         <MarketChart symbol="OKX:OKBUSDT" label="OKB/USDT" />
         <MarketChart symbol="BINANCE:BTCUSDT" label="BTC/USDT" />
         <MarketChart symbol="BINANCE:ETHUSDT" label="ETH/USDT" />
       </div>
 
       {/* Buy + result */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div className="mkt-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         <div className="panel">
           <div style={{ fontSize: 10, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--muted)", marginBottom: 12 }}>What you get</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 16 }}>
@@ -184,6 +184,7 @@ export default function MarketOverviewPage() {
           </div>
         )}
       </div>
+      <style>{`@media(max-width:768px){.charts-grid{grid-template-columns:1fr!important}.mkt-grid{grid-template-columns:1fr!important}main{padding:20px 16px 60px!important}}`}</style>
     </main>
   );
 }

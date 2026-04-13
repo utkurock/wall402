@@ -118,7 +118,7 @@ export default function WalletIntelPage() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+      <div className="intel-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         {/* Left: free preview + comparison */}
         <div>
           {/* Free tier preview */}
@@ -195,6 +195,12 @@ export default function WalletIntelPage() {
           )}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .intel-grid { grid-template-columns: 1fr !important; }
+          main { padding: 20px 16px 60px !important; }
+        }
+      `}</style>
     </main>
   );
 }

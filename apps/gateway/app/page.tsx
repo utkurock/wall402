@@ -222,12 +222,17 @@ export default function HomePage() {
 
       <style>{`
         @media (max-width: 768px) {
-          .hero-banner { padding: 32px 20px 28px !important; flex-direction: column !important; align-items: flex-start !important; }
-          .hero-banner h1 { font-size: 28px !important; }
-          .hero-banner .hero-right { margin-top: 16px; }
-          .products-table { overflow-x: auto; }
-          .products-table > div { min-width: 500px; }
-          .how-grid { grid-template-columns: 1fr 1fr !important; }
+          main section { padding-left: 16px !important; padding-right: 16px !important; }
+          main section > div[style*="borderRadius: 16"] { padding: 28px 20px 24px !important; flex-direction: column !important; gap: 16px !important; }
+          main section > div[style*="borderRadius: 16"] h1 { font-size: 28px !important; }
+          main section > div[style*="borderRadius: 16"] > div:last-child { text-align: left !important; }
+          main section > div[style*="borderRadius: 16"] > div:last-child > div:first-child { font-size: 24px !important; }
+          main section > div[style*="gridTemplateColumns: \"1fr 140px"] { display: flex !important; flex-direction: column !important; }
+          main section > div[style*="gridTemplateColumns: \"1fr 140px"] > div { display: grid !important; grid-template-columns: 1fr auto !important; padding: 12px 16px !important; }
+          main section > div[style*="gridTemplateColumns: \"1fr 140px"] > a { display: grid !important; grid-template-columns: 1fr auto !important; padding: 12px 16px !important; }
+          main section div[style*="gridTemplateColumns: \"repeat(4"] { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
+          main section div[style*="gridTemplateColumns: \"repeat(3"] { grid-template-columns: 1fr !important; }
+          main section div[style*="gridTemplateColumns: \"1fr auto 1fr auto"] { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 4px !important; }
         }
       `}</style>
     </main>
